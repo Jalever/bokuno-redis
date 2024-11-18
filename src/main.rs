@@ -1,11 +1,9 @@
 use tokio::fs::File;
-use tokio::io::{self, AsyncReadExt};
+use tokio::io::{self, AsyncWriteExt};
 
 #[tokio::main]
 async fn main() -> io::Result<()> {
-    let mut f = File::open("./src/foo.txt").await?;
-    let mut buffer = Vec::new();
-    let n = f.read_to_end(&mut buffer).await?;
-    println!("The bytes: {:?}", &buffer[..n]);
+    let mut file = File::create("./src/write_all-to-file.txt").await?;
+    file.write_all(b"some bytes").await?;
     Ok(())
 }
